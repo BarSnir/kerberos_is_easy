@@ -1,0 +1,35 @@
+services:
+  kdc:
+    image: gcavalcante8808/krb5-server
+    container_name: kdc
+    environment:
+    - KRB5_REALM=EXAMPLE.COM
+    - KRB5_KDC=EXAMPLE.COM
+    - KRB5_KDC_PROFILE=/etc/krb5kdc/kdc.conf
+    - KRB5_ADMIN_PASSWORD=admin
+    - KRB5_USER=user
+    - KRB5_USER_PASSWORD=password
+    ports:
+      - "88:88/udp"
+      - "749:749"
+    volumes:
+      - ./kdc/krb5.conf:/etc/krb5.conf
+    tty: true
+    networks:
+      - kerberos_net
+
+  client:
+    image: debian:bookworm
+    container_name: kerberos-client
+    command: sleep infinity
+    volumes:
+      - ./client/krb5.conf:/etc/krb5.conf
+      - ./python-client:/app 
+    depends_on:
+      - kdc
+    networks:
+      - kerberos_net
+
+networks:
+  kerberos_net:
+    driver: bridge
