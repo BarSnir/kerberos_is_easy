@@ -26,3 +26,13 @@ pip install gssapi
 
 # Run to generate ticket token
 python main.py
+
+# TODO
+[1] Organize dockers
+[2] Add Zookeepers only
+[3] Add 3 Kraft controller
+[4] Add 3 Broker
+[5] Add Schema Registry
+[6] Add Java producer
+[7] Add Java consumer
+[8] Add Cluster Link
